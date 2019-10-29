@@ -25,6 +25,6 @@ metrics:
         filename: '{{.filename}}'
 
 server:
-    host: 178.128.166.206 
+    host: localhost 
     port: 9145
     path: /metrics
