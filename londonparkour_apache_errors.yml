@@ -1,0 +1,21 @@
+global:
+    config_version: 2
+input:
+    type: file
+    path: /var/log/apache2/londonparkour_com.error.log 
+    readall: true # Read from the beginning of the file? False means we start at the end of the file and read only new lines.
+grok:
+    patterns_dir: ./patterns
+metrics:
+    - type: counter
+      name: grok_apache2_errors
+      help: Apache2 Logs - Total number of Errors 
+      match: '\[%{WORD:dayname} %{WORD:month} %{DATA:day} %{DATA:hour}:%{DATA:minute}:%{DATA:second} %{YEAR:year}\] \[%{NOTSPACE:error}\] \[pid %{INT:pid}\] \[client %{IP:clientip}:%{POSINT:port}\] %{WORD:language} %{NOTSPACE:errortitle} %{GREEDYDATA:message}'
+      labels:
+        language: '{{.language}}'
+        errortitle: '{{.errortitle}}'
+
+server:
+    host: 178.128.166.206 
+    port: 9144
+    path: /metrics

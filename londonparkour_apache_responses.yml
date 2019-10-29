@@ -1,0 +1,30 @@
+global:
+    config_version: 2
+input:
+    type: file
+    path: /var/log/apache2/londonparkour_com.access.log 
+    readall: true # Read from the beginning of the file? False means we start at the end of the file and read only new lines.
+grok:
+    patterns_dir: ./patterns
+metrics:
+    - type: counter
+      name: grok_apache2_responses
+      help: Apache2 Logs - Total number of Responses
+      match: '%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NOTSPACE:referer} %{QUOTEDSTRING:user_agent} %{INT:request_microseconds} %{URIPATH:filename}'
+      labels:
+        response: '{{.response}}'  
+
+    - type: gauge 
+      name: grok_apache2_latency
+      help: Apache2 Logs - Request Latency 
+      match: '%{IPORHOST:clientip} %{USER:ident} %{USER:auth} \[%{HTTPDATE:timestamp}\] "(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})" %{NUMBER:response} (?:%{NUMBER:bytes}|-) %{NOTSPACE:referer} %{QUOTEDSTRING:user_agent} %{INT:request_microseconds} %{URIPATH:filename}'
+      value: '{{.request_microseconds}}'
+      cumulative: false
+      labels:
+        response: '{{.response}}'  
+        filename: '{{.filename}}'
+
+server:
+    host: 178.128.166.206 
+    port: 9145
+    path: /metrics
