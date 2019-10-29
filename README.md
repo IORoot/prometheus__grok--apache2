@@ -51,3 +51,12 @@ For Prometheus to pick up the grok_exporters, you'll need to make sure that you 
     target_groups:
       - targets: ['localhost:9145']
 ```
+
+## Links to things that helped along the way...
+
+- https://github.com/fstab/grok_exporter
+- https://prometheus.io/docs/prometheus/latest/querying/api/
+- http://grokdebug.herokuapp.com/
+- http://www.ducea.com/2008/02/06/apache-logs-how-long-does-it-take-to-serve-a-request/
+- https://stackify.com/apache-error-log-explained/
+- https://streamsets.com/documentation/datacollector/latest/help/datacollector/UserGuide/Apx-GrokPatterns/GrokPatterns_title.html
