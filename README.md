@@ -1,4 +1,4 @@
-# prometheus__grok_exporter--apache2
+# Grok_exporter for Apache2
 Grok_exporter yaml config files for Apache2 access and error logs. For use with Prometheus.
 
 ## Description
