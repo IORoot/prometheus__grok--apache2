@@ -2,8 +2,8 @@ global:
     config_version: 2
 input:
     type: file
-    path: /var/log/apache2/londonparkour_com.access.log 
-    readall: true # Read from the beginning of the file? False means we start at the end of the file and read only new lines.
+    path: /var/log/apache2/access.log 
+    readall: true
 grok:
     patterns_dir: ./patterns
 metrics:
