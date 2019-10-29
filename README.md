@@ -36,7 +36,8 @@ This means the access.log will now use the 'extended' LogFormat just created.
 
 There are a couple of separate one-liner shell scripts to run the separate grok_exporter instances in the background. Note that they are running on two diffrent ports for prometheus to poll. 
 
-Gotcha: Remember to open up those ports on your firewall with IPTables!
+- Gotcha 1: Remember to open up those ports on your firewall with IPTables!
+- Gotcha 2: Grok_exporter cannot run multiple configs / log files at the same time, so multiple instances are required.
 
 ### Prometheus
 
@@ -51,6 +52,8 @@ For Prometheus to pick up the grok_exporters, you'll need to make sure that you 
     target_groups:
       - targets: ['localhost:9145']
 ```
+
+Reload the prometheus config with a curl request: `curl -X POST http://localhost:9090/-/reload`
 
 ## Links to things that helped along the way...
 
