@@ -16,6 +16,6 @@ metrics:
         errortitle: '{{.errortitle}}'
 
 server:
-    host: 178.128.166.206 
+    host: localhost 
     port: 9144
     path: /metrics
